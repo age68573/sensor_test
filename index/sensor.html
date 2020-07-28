@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>sensor</title>
+<style>
+    h1 {
+        color: teal;
+    }
+    @media only screen and (min-width:769px) {
+        h1{
+            color: #00A3E7;
+            font-size: 72px;
+        }
+
+        p{
+            font-size: 36px;
+        }
+
+        #compass{
+            margin:0 auto;
+            width:60%;
+            /* transform:rotate(-18.6292deg); */
+            background-image:url("../image/compass2.png");  
+            background-size:cover;    
+            transform-origin:center center;
+            -moz-transform-origin:center center;
+            -webkit-transform-origin:center center;
+        }
+
+        #circle {
+            width: 70%;
+            position: absolute;
+            top: 383px;
+            left: 153px;
+            
+        }
+    }
+    @media only screen and (min-width: 321px) and (max-width: 768px) {
+        h1{
+            color: #F00;
+            font-size: 30px;
+        }
+    }
+    @media only screen and (min-width: 0px) and (max-width: 320px){
+        h1{
+        color:#6F0;
+        font-size: 10px;
+        }
+    }
+    
+</style>
+</head>
+<body>
+    <!-- <div id="outer-wrapper"> -->
+        
+        <h1>台北101</h1>
+        <p id="msg"></p>
+        <div>
+            <div style="margin-top: 100px; margin-bottom: 100px;" id="compass"></div>
+            <img src="../image/circle3.png" id="circle" alt="">
+        </div>
+        
+        <div class="mm">
+          <p>黑色圓形缺口為目標方位</p>
+          <p>公園是位在日本所屬的獨立小島“クッション島” 上面</p>
+          <img src="https://lh5.googleusercontent.com/p/AF1QipMMY1uz2AqP9eAQcqwv9fl0JAez1W-VT8ScbTMF=w408-h272-k-no" alt="" width="100%">
+          <dl style="size:12px;">
+            <dd>all：是用於所有裝置</dd>
+            <dd>braille：用於盲文觸覺反饋裝置。</dd>
+            <dd>embossed：用於分頁盲文印表機。</dd>
+            <dd>handheld：用於手持設備（通常是小屏幕，有限的帶寬）。</dd>
+            <dd>print：用於分頁材料，在打印預覽模式下的屏幕上觀看的文件。分頁媒體的格式問題，具體到分頁媒體的信息，請諮詢。</dt>
+            <dd>projection：用於例如投影機，投影演示。分頁媒體的格式問題，具體到分頁媒體的信息，請諮詢。</dt>
+            <dd>screen：主要用於彩色電腦屏幕上。</dd>
+            <dd>speech：用於語音合成器。注：CSS2中也有類似的媒體類型稱為&ldquo;聽覺&rdquo;這一目的。聽覺樣式表的詳細信息，請參閱附錄。</dd>
+            <dd>tty：供媒體使用固定攤位的字符網格（如電傳打字機，終端，或與顯示能力有限的便攜設備）。作者不應使用&ldquo;TTY&rdquo;媒體類型的像素單位。</dd>
+            <dd>tv：用於電視設備（分辨率低，顏色，有限的可滾動屏幕，聲音可用）。</dd>
+          </dl>
+        </div>
+    <!-- </div> -->
+<script>
+
+    var compass = document.getElementById('compass'),
+    w = compass.offsetWidth;
+
+    compass.style.height = w +'px';
+
+    if(window.DeviceOrientationEvent) {
+
+    window.addEventListener('deviceorientation', function(event) {
+            var alpha;
+            //     判斷是否為 iOS 裝置
+            if(event.webkitCompassHeading) {
+                alpha = event.webkitCompassHeading; // iOS 裝置必須使用 event.webkitCompassHeading
+                compass.style.WebkitTransform = 'rotate(-' + alpha + 'deg)';
+                show.innerHTML = alpha;
+            }
+            else {
+                alpha = event.alpha;
+                webkitAlpha = alpha;
+
+                if(!window.chrome) {
+                    webkitAlpha = alpha-270;
+                }
+            }
+
+            compass.style.Transform = 'rotate(' + alpha + 'deg)';
+            compass.style.WebkitTransform = 'rotate('+ webkitAlpha + 'deg)';
+            compass.style.MozTransform = 'rotate(-' + alpha + 'deg)'; 
+        }, false);
+    }else{
+        document.querySelector('body').innerHTML = '你的瀏覽器不支援喔';
+    }
+    
+
+    var id;
+
+    var target = {
+        latitude : 25.033852,
+        longitude: 121.564536
+    };
+
+    var options = {
+        enableHighAccuracy: false,
+        timeout: 300,
+        maximumAge: 0
+    };
+
+    var m = document.getElementById("msg");
+    function getLocation(pos) {
+        var crd = pos.coords;
+        console.log(crd)
+        if (navigator.geolocation) {//
+            navigator.geolocation.getCurrentPosition(getdegree);
+            navigator.geolocation.getCurrentPosition(showPosition);//有拿到位置就呼叫 showPosition 函式
+
+        } else { 
+            m.innerHTML = "您的瀏覽器不支援 顯示地理位置 API ，請使用其它瀏覽器開啟 這個網址";
+        }
+    }
+
+    function showPosition(position) {
+        console.log(position)
+        a=space(position.coords.latitude , position.coords.longitude , target.latitude, target.longitude)
+        console.log(a)
+        
+        // console.log(degree)
+        // circle = document.getElementById("circle")
+        // circle.style.Transform = "rotate("+ degree +" deg)";
+        
+        // document.getElementById("compass").style.transform = 'rotate('+ -degree +'deg)';
+        function space(lat1, lng1, lat2, lng2) {
+            console.log(lat1, lng1, lat2, lng2)
+            var radLat1 = lat1 * Math.PI / 180.0;
+            var radLat2 = lat2 * Math.PI / 180.0;
+            var a = radLat1 - radLat2;
+            var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
+            var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+            s = s * 6378.137;
+            s = Math.round(s * 10000) / 10000;
+            return s  // 單位千米
+        }
+        
+       
+        m.innerHTML = "  緯度 (Latitude): " + position.coords.latitude +
+                    "<br>經度 (Longitude): " + position.coords.longitude +
+                    "<br>距離 (distance): " + a + " KM" 
+                    
+    }
+
+    function getdegree(position) {
+        degree = bearingInitial(position.coords.latitude , position.coords.longitude , target.latitude, target.longitude);
+        // degree = parseInt(degree)+270
+
+        // console.log(typeof(degree))
+        document.getElementById("circle").style.transform = 'rotate('+ degree +'deg)';
+             // 根據經緯度計算與正北方向的夾角角度
+        
+       
+    }
+    function bearingDegrees(latitude1,longitude1,latitude2,longitude2) {
+                // 角度 --> 弧度
+                const degreesToRadians = Math.PI / 180.0;
+
+                const phi1 = latitude1 * degreesToRadians;
+                const phi2 = latitude2 * degreesToRadians;
+                const lam1 = longitude1 * degreesToRadians;
+                const lam2 = longitude2 * degreesToRadians;
+
+                const y = Math.sin(lam2 - lam1) * Math.cos(phi2);
+                const x =
+                    Math.cos(phi1) * Math.sin(phi2) -
+                    Math.sin(phi1) * Math.cos(phi2) * Math.cos(lam2 - lam1);
+
+                const bearing = (Math.atan2(y, x) * 180) / Math.PI;
+
+                return bearing;
+
+                //return Math.atan2(Math.sin(lam2 - lam1) * Math.cos(phi2), Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(lam2 - lam1)) * 180 / Math.PI;
+            }
+        
+
+    // 根據經緯度計算與正北方向的夾角角度後，以順時針為方向的角度
+    function bearingInitial(latitude1,longitude1,latitude2,longitude2) {
+        console.log(
+            "bearingInitial -->" +
+            (
+                (this.bearingDegrees(
+                    latitude1,
+                    longitude1,
+                    latitude2,
+                    longitude2
+                    ) +
+                    360) %
+                360
+            ).toFixed(7)
+        );
+        return (
+            (this.bearingDegrees(latitude1, longitude1, latitude2, longitude2) +
+                360) %
+            360
+        ).toFixed(7);
+    }
+    
+
+    function error(err) {
+    console.warn('ERROR(' + err.code + '): ' + err.message);
+    }
+
+    id = navigator.geolocation.watchPosition(getLocation, error, options);
+</script>
+</body>
+
+</html>
