@@ -18,7 +18,9 @@
         }
 
         #compass{
-            margin:0 auto;
+            position: relative;
+            left: 200px;
+            top: 150px;
             width:60%;
             /* transform:rotate(-18.6292deg); */
             background-image:url("image/compass2.png");  
@@ -31,9 +33,12 @@
         #circle {
             width: 70%;
             position: absolute;
-            top: 383px;
-            left: 153px;
+            top: 500px;
+            left: 148px;
             
+        }
+        .mm {
+            position: relative;
         }
     }
     @media only screen and (min-width: 321px) and (max-width: 768px) {
@@ -56,9 +61,10 @@
         
         <h1>台北101</h1>
         <p id="msg"></p>
-        <div>
-            <div style="margin-top: 100px; margin-bottom: 100px;" id="compass"></div>
+        <div style=" height: 800px; ">
+            <div id="compass"></div>
             <img src="image/circle3.png" id="circle" alt="">
+            <!-- <img src="circle3.png" id="circle2" alt=""> -->
         </div>
         
         <div class="mm">
@@ -75,20 +81,19 @@
             <dd>screen：主要用於彩色電腦屏幕上。</dd>
             <dd>speech：用於語音合成器。注：CSS2中也有類似的媒體類型稱為&ldquo;聽覺&rdquo;這一目的。聽覺樣式表的詳細信息，請參閱附錄。</dd>
             <dd>tty：供媒體使用固定攤位的字符網格（如電傳打字機，終端，或與顯示能力有限的便攜設備）。作者不應使用&ldquo;TTY&rdquo;媒體類型的像素單位。</dd>
-            <dd>tv：用於電視設備（分辨率低，顏色，有限的可滾動屏幕，聲音可用）。</dd>
+            <dd>tvvccvv：用於電視設備（分辨率低，顏色，有限的可滾動屏幕，聲音可用）。</dd>
           </dl>
         </div>
     <!-- </div> -->
 <script>
-
-    var compass = document.getElementById('compass'),
+    var compass = document.getElementById('compass')
     w = compass.offsetWidth;
-
+    var circle2 = document.getElementById('circle2')
     compass.style.height = w +'px';
 
     if(window.DeviceOrientationEvent) {
 
-    window.addEventListener('deviceorientation', function(event) {
+        window.addEventListener('deviceorientation', function(event) {
             var alpha;
             //     判斷是否為 iOS 裝置
             if(event.webkitCompassHeading) {
@@ -116,10 +121,29 @@
 
     var id;
 
-    var target = {
-        latitude : 25.033852,
-        longitude: 121.564536
+    // var target = { //陳平緯紀念公園
+    //     latitude : 24.657848,
+    //     longitude: 124.687801
+    // };
+
+    var target = { //蘭嶼
+        latitude : 22.044670,
+        longitude: 121.548763
     };
+
+    // var  target = {//101
+    //     latitude : 25.034044,
+    //     longitude: 121.564550  
+    // };
+
+    // var  target = { //美濃
+    //     latitude : 22.892408,
+    //     longitude: 120.559264
+    // };
+    // var  target = { //福州
+    //     latitude : 26.059522,
+    //     longitude: 119.304941
+    // };
 
     var options = {
         enableHighAccuracy: false,
@@ -169,14 +193,31 @@
                     
     }
 
-    function getdegree(position) {
+    async function getdegree(position) {
         degree = bearingInitial(position.coords.latitude , position.coords.longitude , target.latitude, target.longitude);
+        degreen = bearingInitial( 90, 0 , position.coords.latitude, position.coords.longitude);
+        // dd = (-degreen) + parseInt(degree)
+        // console.log(dd)
+        document.getElementById("circle").style.transform = 'rotate(-'+ degree +'deg)';
         // degree = parseInt(degree)+270
+        // await b()
+        // await a()
 
-        // console.log(typeof(degree))
-        document.getElementById("circle").style.transform = 'rotate('+ degree +'deg)';
-             // 根據經緯度計算與正北方向的夾角角度
+        // function a () {
+        //     degree = bearingInitial(position.coords.latitude , position.coords.longitude , target.latitude, target.longitude);
+        //     document.getElementById("circle").style.transform = 'rotate('+ degree +'deg)';
+        // }
+        // function b() {
+        //     degreen = bearingInitial( 90, 0 , position.coords.latitude, position.coords.longitude);
+        //     document.getElementById("circle").style.transform = 'rotate(-'+ degreen +'deg)';
+        // }
         
+        console.log("degree: " +degree)
+        
+        console.log("degreen: " +degreen)
+        
+             // 根據經緯度計算與正北方向的夾角角度
+             console.log(degree)
        
     }
     function bearingDegrees(latitude1,longitude1,latitude2,longitude2) {
