@@ -19,8 +19,8 @@
 
         #compass{
             position: relative;
-            left: 200px;
-            top: 150px;
+            left: 21%;
+            top: 155px;
             width:60%;
             /* transform:rotate(-18.6292deg); */
             background-image:url("image/compass2.png");  
@@ -31,10 +31,13 @@
         }
 
         #circle {
-            width: 70%;
+            width: 75%;
             position: absolute;
-            top: 500px;
-            left: 148px;
+            top: 440px;
+            /* left: 148px; */
+            /* top:29% ; */
+            left: 13%;
+            
             
         }
         .mm {
@@ -67,7 +70,7 @@
             <!-- <img src="circle3.png" id="circle2" alt=""> -->
         </div>
         
-        <div class="mm">
+        <!-- <div class="mm">
           <p>黑色圓形缺口為目標方位</p>
           <p>公園是位在日本所屬的獨立小島“クッション島” 上面</p>
           <img src="https://lh5.googleusercontent.com/p/AF1QipMMY1uz2AqP9eAQcqwv9fl0JAez1W-VT8ScbTMF=w408-h272-k-no" alt="" width="100%">
@@ -83,7 +86,7 @@
             <dd>tty：供媒體使用固定攤位的字符網格（如電傳打字機，終端，或與顯示能力有限的便攜設備）。作者不應使用&ldquo;TTY&rdquo;媒體類型的像素單位。</dd>
             <dd>tvvccvv：用於電視設備（分辨率低，顏色，有限的可滾動屏幕，聲音可用）。</dd>
           </dl>
-        </div>
+        </div> -->
     <!-- </div> -->
 <script>
     var compass = document.getElementById('compass')
@@ -103,7 +106,7 @@
             }
             else {
                 alpha = event.alpha;
-                webkitAlpha = alpha;
+                webkitAlpha = alpha-30; //webkitAlpha = alpha 安卓需-150
 
                 if(!window.chrome) {
                     webkitAlpha = alpha-270;
@@ -126,15 +129,15 @@
     //     longitude: 124.687801
     // };
 
-    var target = { //蘭嶼
-        latitude : 22.044670,
-        longitude: 121.548763
-    };
-
-    // var  target = {//101
-    //     latitude : 25.034044,
-    //     longitude: 121.564550  
+    // var target = { //蘭嶼
+    //     latitude : 22.044670,
+    //     longitude: 121.548763
     // };
+
+    var  target = {//101
+        latitude : 25.034044,
+        longitude: 121.564550  
+    };
 
     // var  target = { //美濃
     //     latitude : 22.892408,
