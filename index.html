@@ -18,25 +18,28 @@
         }
 
         #compass{
-            position: relative;
+            /* margin: 10% 30% 50px 10%; */
+            position: absolute;
             left: 21%;
-            top: 160px;
+            top: 530px;
+            /* top: 50%; */
             width:60%;
             /* transform:rotate(-18.6292deg); */
-            background-image:url("image/compass2.png");  
-            background-size:cover;    
+            /* background-image:url("image/compass2.png");   */
+            /* background-size:cover;     */
             transform-origin:center center;
             -moz-transform-origin:center center;
             -webkit-transform-origin:center center;
         }
 
         #circle {
-            width: 75%;
+            width: 70%;
             position: absolute;
-            top: 440px;
+            top: 450px;
             /* left: 148px; */
-            /* top:29% ; */
-            left: 13%;
+            /* top:34% ; */
+            left:15%;
+            /* right: 13%; */
             
             
         }
@@ -67,8 +70,9 @@
             <p id="msg"></p>
         </div>
         
-        <div style=" height: 800px; ">
-            <div id="compass"></div>
+        <div style="overflow: hidden;">
+            <!-- <div id="compass"></div> -->
+            <img src="image/compass2.png" id="compass" alt="">
             <img src="image/circle3.png" id="circle" alt="">
             <!-- <img src="circle3.png" id="circle2" alt=""> -->
         </div>
