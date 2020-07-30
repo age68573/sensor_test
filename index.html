@@ -203,7 +203,7 @@
                     
     }
 
-    async function getdegree(position) {
+    function getdegree(position) {
         degree = bearingInitial(position.coords.latitude , position.coords.longitude , target.latitude, target.longitude);
         degreen = bearingInitial( 90, 0 , position.coords.latitude, position.coords.longitude);
         // dd = (-degreen) + parseInt(degree)
